@@ -1,0 +1,11 @@
+.create_user_div {
+    background-color: black;
+    height:100%;
+    width: 100%;
+   color: white;
+    font-weight: 900;
+    background-image: url(./image/3d-rendering-kid-playing-digital-game.jpg);
+    background-repeat:no-repeat;
+    background-size:cover;
+  }
+  
