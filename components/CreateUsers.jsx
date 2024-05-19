@@ -1,70 +1,109 @@
-import { Grid, Typography,Button } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import styles from "./create_user.module.css"
-import {fetchUsersApi, handleUsersApi } from "../src/api";
+import styles from "./create_user.module.css";
+import { fetchUsersApi, handleUsersApi } from "../src/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export const CreateUsers = () => {
+  const [emailError, setEmailError] = useState("");
+  const [rollNumberError, setRollNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
 
- 
+  const navigate = useNavigate();
+  const [usersFormValue, setUsersFormValue] = useState({
+    rollnumber: "",
+    username: "",
+    email: "",
+    phonenumber: "",
+    course: "",
+    branch: "",
+    batch: "",
+    usertype: "",
+  });
 
-const navigate = useNavigate();
-const [usersFormValue,setUsersFormValue]=useState({
-  rollnumber: "",
-  username: "",
-  email: "",
-  phonenumber:"",
-  course: "",
-  branch: "",
-  batch:"",
-  usertype: ""
-}
- 
-);
+  useEffect(() => {
+    handleApiCall();
+  }, []);
 
-useEffect(()=> {handleApiCall()},[])
+  const HandleUsers = () => {
+    if (
+      usersFormValue.rollnumber &&
+      usersFormValue.username &&
+      usersFormValue.email &&
+      usersFormValue.phonenumber &&
+      usersFormValue.course &&
+      usersFormValue.branch &&
+      usersFormValue.batch &&
+      usersFormValue.usertype
+    ) {
+      handleUsersApi(usersFormValue);
+      setUsersFormValue({
+        rollnumber: "",
+        username: "",
+        email: "",
+        phonenumber: "",
+        course: "",
+        branch: "",
+        batch: "",
+        usertype: "",
+      });
+      navigate("/users");
+      handleApiCall()
+    }
+  };
 
-const HandleUsers=()=>{
-  if(usersFormValue.rollnumber &&
-     usersFormValue.username&&
-    usersFormValue.email&&
-  usersFormValue.phonenumber&&
-usersFormValue.course&&
-usersFormValue.branch&&
-usersFormValue.batch&&
-usersFormValue.usertype){
-  handleUsersApi(usersFormValue);
-    setUsersFormValue({
-      rollnumber: "",
-      username: "",
-      email: "",
-      phonenumber:"",
-      course: "",
-      branch: "",
-      batch:"",
-      usertype: ""
-    })
-    navigate("/users")
-     handleUsersApi(usersFormValue);
-  }
- 
-}
+  const handleUsersBack = () => {
+    navigate("/users");
+  };
+  const handleApiCall = () => {
+    fetchUsersApi();
+  };
 
-const handleUsersBack=()=>{
-  navigate("/users")
-}
-const handleApiCall=()=>{
- 
-  fetchUsersApi()
-}
-            
+  const validateRollNumber = (rollNumber) => {
+    const rollNumberRegex = /^[0-9]{12}$/;
+    if (!rollNumberRegex.test(rollNumber)) {
+      setRollNumberError("Roll number must be exactly 12 digits.");
+    } else {
+      setRollNumberError("");
+    }
+  };
 
+  const handleRollNumberChange = (e) => {
+    setUsersFormValue({ ...usersFormValue, rollnumber: e.target.value });
+    validateRollNumber(e.target.value);
+  };
 
-console.log(usersFormValue)
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneNumberError("Invalid phone number.");
+    } else {
+      setPhoneNumberError("");
+    }
+  };
+  const handlePhoneNumberChange = (e) => {
+    setUsersFormValue({ ...usersFormValue, phonenumber: e.target.value });
+    validatePhoneNumber(e.target.value);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Invalid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setUsersFormValue({  ...usersFormValue,email: e.target.value });
+    validateEmail(e.target.value);
+  };
+
+  console.log(usersFormValue);
   return (
     <div className={styles.create_user_div}>
       <Grid
@@ -110,13 +149,9 @@ console.log(usersFormValue)
                   id="outlined-required"
                   label="Required"
                   value={usersFormValue.rollnumber}
-                   onChange={(event) => {
-             
-              setUsersFormValue({
-                ...usersFormValue,rollnumber:event.target.value
-               })
-             
-            }}
+                  error={Boolean(rollNumberError)}
+                  helperText={rollNumberError}
+                  onChange={handleRollNumberChange}
                 />
               </Box>
             </Grid>
@@ -156,12 +191,12 @@ console.log(usersFormValue)
                   required
                   id="outlined-required"
                   label="Required"
-               value={usersFormValue.username}
+                  value={usersFormValue.username}
                   onChange={(event) => {
                     setUsersFormValue({
-                      ...usersFormValue,username:event.target.value,
-                     })
-                   
+                      ...usersFormValue,
+                      username: event.target.value,
+                    });
                   }}
                 />
               </Box>
@@ -203,13 +238,10 @@ console.log(usersFormValue)
                   required
                   id="outlined-required"
                   label="Required"
-               value={usersFormValue.email}
-                  onChange={(event) => {
-                    setUsersFormValue({
-                      ...usersFormValue,email:event.target.value,
-                     })
-                   
-                  }}
+                  value={usersFormValue.email}
+                  error={Boolean(emailError)}
+                  helperText={emailError}
+                  onChange={handleEmailChange}
                 />
               </Box>
             </Grid>
@@ -250,12 +282,9 @@ console.log(usersFormValue)
                   id="outlined-required"
                   label="Required"
                   value={usersFormValue.phonenumber}
-                  onChange={(event) => {
-                    setUsersFormValue({
-                      ...usersFormValue,phonenumber:event.target.value,
-                     })
-                   
-                  }}
+                  error={Boolean(phoneNumberError)}
+                  helperText={phoneNumberError}
+                  onChange={handlePhoneNumberChange}
                 />
               </Box>
             </Grid>
@@ -300,9 +329,9 @@ console.log(usersFormValue)
                   value={usersFormValue.course}
                   onChange={(event) => {
                     setUsersFormValue({
-                      ...usersFormValue,course:event.target.value,
-                     })
-                   
+                      ...usersFormValue,
+                      course: event.target.value,
+                    });
                   }}
                 />
               </Box>
@@ -343,12 +372,12 @@ console.log(usersFormValue)
                   required
                   id="outlined-required"
                   label="Required"
-                 value={usersFormValue.branch}
+                  value={usersFormValue.branch}
                   onChange={(event) => {
                     setUsersFormValue({
-                      ...usersFormValue,branch:event.target.value,
-                     })
-                   
+                      ...usersFormValue,
+                      branch: event.target.value,
+                    });
                   }}
                 />
               </Box>
@@ -392,9 +421,9 @@ console.log(usersFormValue)
                   value={usersFormValue.batch}
                   onChange={(event) => {
                     setUsersFormValue({
-                      ...usersFormValue,batch:event.target.value,
-                     })
-                   
+                      ...usersFormValue,
+                      batch: event.target.value,
+                    });
                   }}
                 />
               </Box>
@@ -437,22 +466,48 @@ console.log(usersFormValue)
                   label="Required"
                   value={usersFormValue.usertype}
                   onChange={(event) => {
-                   setUsersFormValue({
-                    ...usersFormValue,usertype:event.target.value,
-                   })
+                    setUsersFormValue({
+                      ...usersFormValue,
+                      usertype: event.target.value,
+                    });
                   }}
                 />
               </Box>
             </Grid>
           </Grid>
-          
-         
         </Grid>
-        <Grid container style={{justifyContent:"space-between",display:"flex",width:"82%",marginTop:"50px",marginBottom:"15px"}}>
-        <Grid item><Button  color="primary" variant="contained" onClick={handleUsersBack}><ArrowBackIosNewIcon/><Typography marginLeft={"5px"}>back</Typography></Button></Grid>
-        <Grid item>  <Button type="submit" color="success" variant="contained" onClick={HandleUsers}>Submit</Button></Grid>
-      
+        <Grid
+          container
+          style={{
+            justifyContent: "space-between",
+            display: "flex",
+            width: "82%",
+            marginTop: "50px",
+            marginBottom: "15px",
+          }}
+        >
+          <Grid item>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleUsersBack}
+            >
+              <ArrowBackIosNewIcon />
+              <Typography marginLeft={"5px"}>back</Typography>
+            </Button>
           </Grid>
+          <Grid item>
+            {" "}
+            <Button
+              type="submit"
+              color="success"
+              variant="contained"
+              onClick={HandleUsers}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </div>
   );

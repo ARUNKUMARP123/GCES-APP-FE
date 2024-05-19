@@ -19,18 +19,60 @@ import { Grid, Typography } from "@mui/material";
 // import { handleLoginApi, handleRegistrationApi } from "../src/api";
 
 export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
-  const [emailError, setEmeilError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [rollnumberError, setRollnumberError] = useState("");
+  const [rollnumberError, setRollNumberError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const validateEmail = () => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(FormValue.email);
+
+
+  const validateRollNumber = (rollNumber) => {
+    const rollNumberRegex = /^[0-9]{12}$/;
+    if (!rollNumberRegex.test(rollNumber)) {
+      setRollNumberError('Roll number must be exactly 12 digits.');
+    } else {
+      setRollNumberError('');
+    }
   };
+
+
+  const handleRollNumberChange = (e) => {
+    setFormValue((prevState) => ({...prevState,rollnumber:e.target.value}));
+    validateRollNumber(e.target.value);
+  };
+
+
+
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneNumberError('Invalid phone number.');
+    } else {
+      setPhoneNumberError('');
+    }
+  };
+  const handlePhoneNumberChange = (e) => {
+    setFormValue((prevState) => ({...prevState,phonenumber:e.target.value}));
+    validatePhoneNumber(e.target.value);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError('Invalid email address.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setFormValue((prevState)=>({...prevState,email:e.target.value}));
+    validateEmail(e.target.value);
+  };
+
   const validatePassword = () => {
     const passwordRegex =
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
@@ -157,19 +199,7 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
             variant="standard"
             error={Boolean(rollnumberError)}
             helperText={rollnumberError}
-            onChange={(event) => {
-              setFormValue((prevState) => ({
-                ...prevState,
-                rollnumber: event.target.value,
-              }));
-              if (FormValue.rollnumber < 6) {
-                setRollnumberError(
-                  "RollNumber must be atleast 12 characters..."
-                );
-              } else {
-                setRollnumberError("");
-              }
-            }}
+            onChange={handleRollNumberChange}
           />
           <TextField
             autoFocus
@@ -200,17 +230,7 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
             variant="standard"
             error={Boolean(emailError)}
             helperText={emailError}
-            onChange={(event) => {
-              setFormValue((prevState) => ({
-                ...prevState,
-                email: event.target.value,
-              }));
-              if (!validateEmail(FormValue.email)) {
-                setEmeilError("Please Enter Valid email..");
-              } else {
-                setEmeilError("");
-              }
-            }}
+            onChange={handleEmailChange}
           />
           <TextField
             autoFocus
@@ -257,7 +277,8 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
                     ...prevState,
                     password2: event.target.value,
                   }));
-                  if (FormValue.password1 !== FormValue.password2) {
+               
+                  if (FormValue.password1 !== event.target.value) {
                     setConfirmPasswordError(
                       "Password Not Match With ConfirmPassword..."
                     );
@@ -278,19 +299,7 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
                 variant="standard"
                 error={Boolean(phoneNumberError)}
                 helperText={phoneNumberError}
-                onChange={(event) => {
-                  setFormValue((prevState) => ({
-                    ...prevState,
-                    phonenumber: event.target.value,
-                  }));
-                  if (FormValue.phonenumber < 10) {
-                    setPhoneNumberError(
-                      "PhoneNumber must be atleast 10 characters..."
-                    );
-                  } else {
-                    setPhoneNumberError("");
-                  }
-                }}
+                onChange={handlePhoneNumberChange}
               />
               <TextField
                 autoFocus
@@ -343,23 +352,7 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
                   }));
                 }}
               />
-              <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="usertype"
-                name="usertype"
-                label="UserType"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={(event) => {
-                  setFormValue((prevState) => ({
-                    ...prevState,
-                    usertype: event.target.value,
-                  }));
-                }}
-              />
+
             </>
           )}
         </DialogContent>

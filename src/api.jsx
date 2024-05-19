@@ -93,7 +93,7 @@ export const fetchUsersApi= ()=>{
 
   };
   export const handleResetPasswordApi= (id,token,password)=>{
-    return axios.post(`${apiURL}+/reset-password/${id}/${token}`,{password});
+    return axios.post(apiURL+"/reset-password/"+id+"/"+token,{password});
 
   };
 

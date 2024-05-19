@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { handleForgotPasswordApi } from "../src/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import {  useNavigate } from "react-router-dom";
 
 export const ForgotPassword = () => {
@@ -14,7 +15,8 @@ export const ForgotPassword = () => {
 
     const handleForgot= async()=>{
       const response=await handleForgotPasswordApi(email);
-      if(response.data.Status === "Success"){
+      if(response.data.Status === "Reset Password Link send Success"){
+        toast.success(response.data.Status)
         navigate("/")
       }
     }
