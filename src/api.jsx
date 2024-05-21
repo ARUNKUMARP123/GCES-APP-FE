@@ -19,7 +19,7 @@ export const handleLoginApi = ({
     username,
     email,
     password1,
-  });
+  },{withCredentials:true});
 };
 export const handleRegistrationApi = ({
   rollnumber = "",
@@ -42,7 +42,7 @@ export const handleRegistrationApi = ({
     branch,
     batch,
     usertype,
-  });
+  },{withCredentials:true});
 };
 
 
@@ -69,7 +69,7 @@ export const handleUsersApi = ({
 };
 
 export const fetchUsersApi= ()=>{
-    return axios.get(apiURL+"/fetchUsers");
+    return axios.get(apiURL+"/fetchUsers",{withCredentials:true});
 
   };
   

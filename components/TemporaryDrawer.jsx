@@ -49,7 +49,7 @@ export default function TemporaryDrawer({
       </List>
       <List>
           <ListItem  disablePadding>
-            <ListItemButton onClick={()=>{navigate("/tasks")}}>
+            <ListItemButton onClick={()=>{navigate("/task")}}>
               <ListItemIcon>
                <TaskIcon/>
               </ListItemIcon>

@@ -11,6 +11,7 @@ import { fetchUsersApi, handleDeleteUserApi } from '../src/api';
 import {Grid,Button,Typography} from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Link from '@mui/material/Link/Link';
+import { toast } from 'react-toastify';
 
 
 export const Users = () => {
@@ -47,7 +48,9 @@ export const Users = () => {
         .then((response)=>{
             response.data.user?.length &&
             setCreatedUsers(response.data?.user)})
-            .catch((error)=>{console.log(error)});
+            .catch((error)=>{
+              toast.error(error.response.data.message)
+              console.log(error)});
       }
 
      const HandleDeleteUsers= async(userid)=>{

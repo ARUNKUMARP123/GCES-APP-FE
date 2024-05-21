@@ -6,6 +6,7 @@ import { fetchUsersApi, handleUsersApi } from "../src/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { toast } from "react-toastify";
 
 export const CreateUsers = () => {
   const [emailError, setEmailError] = useState("");
@@ -28,7 +29,7 @@ export const CreateUsers = () => {
     handleApiCall();
   }, []);
 
-  const HandleUsers = () => {
+  const HandleUsers = async() => {
     if (
       usersFormValue.rollnumber &&
       usersFormValue.username &&
@@ -39,7 +40,15 @@ export const CreateUsers = () => {
       usersFormValue.batch &&
       usersFormValue.usertype
     ) {
-      handleUsersApi(usersFormValue);
+     const response= await handleUsersApi(usersFormValue);
+     if(response.data.success===true){
+      toast.success(response.data.message)
+     }
+     else{
+      toast.error(response.data.message)
+     }
+     
+     console.log(response)
       setUsersFormValue({
         rollnumber: "",
         username: "",
@@ -102,8 +111,6 @@ export const CreateUsers = () => {
     setUsersFormValue({  ...usersFormValue,email: e.target.value });
     validateEmail(e.target.value);
   };
-
-  console.log(usersFormValue);
   return (
     <div className={styles.create_user_div}>
       <Grid
