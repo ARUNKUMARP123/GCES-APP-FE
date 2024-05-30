@@ -89,7 +89,6 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
     course: "",
     branch: "",
     batch: "",
-    usertype: "",
   });
 
   const {
@@ -102,10 +101,9 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
     course,
     batch,
     branch,
-    usertype,
   } = FormValue;
 
-  const { user, isError, isLoading, isSuccess, message } = useSelector(
+  const { user, isError, isLoading, isSuccess, message, } = useSelector(
     (state) => state.Auth
   );
 
@@ -171,7 +169,6 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
                   course,
                   batch,
                   branch,
-                  usertype,
                 };
                 dispatch(register(userData));
               }

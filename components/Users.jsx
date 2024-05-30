@@ -40,7 +40,7 @@ export const Users = () => {
       const [createdUsers,setCreatedUsers]=useState([]);
 
       useEffect(()=>{
-         CallGetApi();
+         CallGetApi();  
       },[])
 
       const CallGetApi=()=>{
@@ -54,7 +54,12 @@ export const Users = () => {
       }
 
      const HandleDeleteUsers= async(userid)=>{
-    await handleDeleteUserApi(userid);
+   const response= await handleDeleteUserApi(userid);
+   if(response.data.message=== "Data Delete Successful."){
+    toast.success(response.data.message)
+   }else{
+    toast.error(response.data.message)
+   }
     CallGetApi();
 
      }

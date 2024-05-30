@@ -30,7 +30,6 @@ export const handleRegistrationApi = ({
   course = "",
   branch = "",
   batch = "",
-  usertype = "",
 }) => {
   return axios.post(apiURL + "/registration", {
     rollnumber,
@@ -41,7 +40,6 @@ export const handleRegistrationApi = ({
     course,
     branch,
     batch,
-    usertype,
   },{withCredentials:true});
 };
 
@@ -65,7 +63,7 @@ export const handleUsersApi = ({
     branch,
     batch,
     usertype,
-  });
+  },{withCredentials:true});
 };
 
 export const fetchUsersApi= ()=>{
@@ -74,17 +72,17 @@ export const fetchUsersApi= ()=>{
   };
   
   export const handleEditUserApi= (id,Value)=>{
-    return axios.put(apiURL+"/editUsers/"+id,Value);
+    return axios.put(apiURL+"/editUsers/"+id,{Value},{withCredentials:true});
 
   };
 
   export const handleFetchOneApi= ({id})=>{
-    return axios.get(apiURL+"/getone/"+id);
+    return axios.get(apiURL+"/getone/"+id,{withCredentials:true});
 
   };
 
   export const handleDeleteUserApi= (userid)=>{
-    return axios.delete(apiURL+"/deleteUsers/"+userid);
+    return axios.delete(apiURL+"/deleteUsers/"+userid,{withCredentials:true});
 
   };
 
@@ -97,5 +95,75 @@ export const fetchUsersApi= ()=>{
 
   };
 
+
+  export const handleCreateTaskApi = ({
+    title= '',
+    description= '',
+    dueDate= '',
+    assignedTo= '',
+    status= 'Pending',
+    adminComments= '',
+    taskUrl= '',
+  }) => {
+    return axios.post(apiURL+"/create-task", {
+      title,
+      description,
+      dueDate,
+      assignedTo,
+      status,
+      adminComments,
+      taskUrl,
+    },{withCredentials:true});
+  };
+
+  export const handleUpdateTaskApi = (id,{
+    title= '',
+    description= '',
+    dueDate= '',
+    assignedTo= '',
+    status= 'Pending',
+    adminComments= '',
+    studentComments='',
+    taskUrl= '',
+  }) => {
+    return axios.put(apiURL+"/updateTask/"+id, {
+      title,
+      description,
+      dueDate,
+      assignedTo,
+      status,
+      adminComments,
+      studentComments,
+      taskUrl,
+    },{withCredentials:true});
+  };
+
+
+  export const handleDeleteTaskApi= (id)=>{
+    return axios.delete(apiURL+"/deleteTask/"+id,{withCredentials:true});
+
+  };
+
+  export const fetchTasksApi= ()=>{
+    return axios.get(apiURL+"/getTasks",{withCredentials:true});
+
+  };
+
+
+  export const handleUpdateTaskStatus = (taskId, statusData) => {
+    return axios.put(apiURL+"/updateTaskStatus/"+taskId, statusData,{withCredentials:true});
+  };
+
+  export const handleUpdateTaskMark = (taskId, marks) => {
+    return axios.put(apiURL+"/updateTaskMarks/"+taskId, marks,{withCredentials:true});
+  };
+
+  export const handleUpdateSubmitTaskURL = (taskId, url) => {
+    return axios.put(apiURL+"/updateSubmitTaskUrl/"+taskId, url,{withCredentials:true});
+  };
+
+  export const handleUpdateComments = (taskId, field) => {
+    return axios.put(apiURL+"/updatecomments/"+taskId, field,{withCredentials:true});
+  };
 
  

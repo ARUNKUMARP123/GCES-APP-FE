@@ -6,6 +6,7 @@ import {handleEditUserApi, handleFetchOneApi,} from "../src/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { toast } from "react-toastify";
 
 const EditUser = () => {
   const navigate=useNavigate();
@@ -23,8 +24,6 @@ const [Value,setValue]=useState({
  
 );
 
-console.log(Value)
-
 useEffect(()=>{
       handleFetchOneApi({id})
     .then((response)=>{
@@ -39,7 +38,10 @@ useEffect(()=>{
 
 const handUpdate=async()=>{
   
-await handleEditUserApi(id,Value);
+  
+const response=await handleEditUserApi(id,Value);
+console.log(response)
+if(response.data.message=== "Data Updated Successful."){
   setValue({
     rollnumber: "",
     username: "",
@@ -50,7 +52,12 @@ await handleEditUserApi(id,Value);
     batch:"",
     usertype: ""
   })
+  toast.success(response.data.message)
   navigate("/users");
+}else{
+  toast.error(response.data.message)
+}
+  
 }
 const handleUsersBack=()=>{
   navigate("/users")

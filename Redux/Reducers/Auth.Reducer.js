@@ -3,6 +3,7 @@ import { handleLoginApi, handleRegistrationApi } from "../../src/api";
 
 let User =JSON.parse(localStorage.getItem("user"));
 
+
 export const register = createAsyncThunk(
     '',
     async (user, thunkAPI) => {
