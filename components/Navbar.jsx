@@ -19,7 +19,6 @@ const dispatch=useDispatch();
   const { user } = useSelector((state) => state.Auth);
 
 
-
 const handleLogOut=()=>{
   localStorage.removeItem("user");
 dispatch(logout());
