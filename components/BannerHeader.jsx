@@ -1,12 +1,16 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme, } from "@mui/material";
 
 export const BannerHeader = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Mobile screen size
   return (
     <Grid
       container
       display={"flex"}
-      justifyContent={"space-around"}
-      padding={3}
+      justifyContent={isMobile ? "center" : "space-around"}
+      alignItems={"center"}
+      padding={isMobile ? 2 : 3}
+      flexDirection={isMobile ? "column" : "row"} // Stack items vertically on mobile
     >
       <Grid item style={{ height: "125px", width: "125px" }}>
         <img
@@ -15,11 +19,11 @@ export const BannerHeader = () => {
           alt="logo"
         />
       </Grid>
-      <Grid item textAlign={"center"}>
-        <Typography style={{ fontWeight: "bold" }} variant="h5">
+      <Grid item textAlign={isMobile ? "center" : "left"}>
+        <Typography style={{ fontWeight: "bold" }} variant={isMobile ? "h6" : "h5"}>
           GOVERNMENT COLLEGE OF ENGINEERING SRIRANGAM
         </Typography>
-        <Typography style={{ fontWeight: "bold" }} color={"blue"} variant="h5">
+        <Typography style={{ fontWeight: "bold" }} color={"blue"} variant={isMobile ? "h6" : "h5"}>
           {" "}
           அரசினர் பொறியியல் கல்லூரி ஸ்ரீரங்கம்
         </Typography>

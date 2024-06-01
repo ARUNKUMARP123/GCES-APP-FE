@@ -5,4 +5,5 @@
   background-image: url(https://gces.edu.in/sites/gces.edu.in/files/2024-04/banner2.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center; /* Center the background image */
 }

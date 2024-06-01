@@ -8,14 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
 import { fetchUsersApi, handleDeleteUserApi } from '../src/api';
-import {Grid,Button,Typography} from '@mui/material';
+import {Grid,Button,Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Link from '@mui/material/Link/Link';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 
 export const Users = () => {
 
+  const { user } = useSelector((state) => state.Auth); // Assume your user data is in the Auth state
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -63,11 +65,21 @@ export const Users = () => {
     CallGetApi();
 
      }
+     console.log(user)
   return (
     <div>
-        <Grid container style={{height:"70px",alignItems:"center"}}>
-          <Grid item><Link href="/create"> <Button color='success' variant='contained'><AddCircleOutlineIcon/><Typography textTransform={"capitalize"} marginLeft={1}>Create New User</Typography></Button></Link> </Grid>
+         {user?.user_role==="Admin" && (
+        <Grid container style={{ height: '70px', alignItems: 'center' }}>
+          <Grid item>
+            <Link href="/create">
+              <Button color='success' variant='contained'>
+                <AddCircleOutlineIcon />
+                <Typography textTransform={"capitalize"} marginLeft={1}>Create New User</Typography>
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
+      )}
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700, }} aria-label="customized table" >
         <TableHead>
