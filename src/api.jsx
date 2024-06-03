@@ -1,12 +1,14 @@
 import axios from "axios";
 
 const localApi = "http://localhost:4001";
-const renderApi="https://gces-app-fe1.netlify.app"
-const API_URL  =import.meta.env.VITE_API_URL==="Production" ? renderApi : localApi;
+
+const API_URL  =import.meta.env.VITE_API_URL || localApi;
+console.log(API_URL)
+
 
 const apiURL = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  withCredentials:true,
 });
 
 // const apiURL = localApi;
@@ -17,7 +19,7 @@ export const handleLoginApi = ({
   email = "",
   password1 = "",
 }) => {
-  return axios.post(apiURL + "/login", {
+  return apiURL.post("/login", {
     rollnumber,
     username,
     email,
@@ -34,7 +36,7 @@ export const handleRegistrationApi = ({
   branch = "",
   batch = "",
 }) => {
-  return axios.post(apiURL + "/registration", {
+  return apiURL.post("/registration", {
     rollnumber,
     username,
     email,
@@ -57,7 +59,7 @@ export const handleUsersApi = ({
   batch = "",
   usertype = "",
 }) => {
-  return axios.post(apiURL+"/create_users", {
+  return apiURL.post("/create_users", {
     rollnumber,
     username,
     email,
@@ -70,31 +72,31 @@ export const handleUsersApi = ({
 };
 
 export const fetchUsersApi= ()=>{
-    return axios.get(apiURL+"/fetchUsers",{withCredentials:true});
+    return apiURL.get("/fetchUsers",{withCredentials:true});
 
   };
   
   export const handleEditUserApi= (id,Value)=>{
-    return axios.put(apiURL+"/editUsers/"+id,{Value},{withCredentials:true});
+    return apiURL.put("/editUsers/"+id,{Value},{withCredentials:true});
 
   };
 
   export const handleFetchOneApi= ({id})=>{
-    return axios.get(apiURL+"/getone/"+id,{withCredentials:true});
+    return apiURL.get("/getone/"+id,{withCredentials:true});
 
   };
 
   export const handleDeleteUserApi= (userid)=>{
-    return axios.delete(apiURL+"/deleteUsers/"+userid,{withCredentials:true});
+    return apiURL.delete("/deleteUsers/"+userid,{withCredentials:true});
 
   };
 
   export const handleForgotPasswordApi= (email)=>{
-    return axios.post(apiURL+"/forgot-password/",{email});
+    return apiURL.post("/forgot-password/",{email});
 
   };
   export const handleResetPasswordApi= (id,token,password)=>{
-    return axios.post(apiURL+"/reset-password/"+id+"/"+token,{password});
+    return apiURL.post("/reset-password/"+id+"/"+token,{password});
 
   };
 
@@ -108,7 +110,7 @@ export const fetchUsersApi= ()=>{
     adminComments= '',
     taskUrl= '',
   }) => {
-    return axios.post(apiURL+"/create-task", {
+    return apiURL.post("/create-task", {
       title,
       description,
       dueDate,
@@ -129,7 +131,7 @@ export const fetchUsersApi= ()=>{
     studentComments='',
     taskUrl= '',
   }) => {
-    return axios.put(apiURL+"/updateTask/"+id, {
+    return apiURL.put("/updateTask/"+id, {
       title,
       description,
       dueDate,
@@ -143,30 +145,30 @@ export const fetchUsersApi= ()=>{
 
 
   export const handleDeleteTaskApi= (id)=>{
-    return axios.delete(apiURL+"/deleteTask/"+id,{withCredentials:true});
+    return apiURL.delete("/deleteTask/"+id,{withCredentials:true});
 
   };
 
   export const fetchTasksApi= ()=>{
-    return axios.get(apiURL+"/getTasks",{withCredentials:true});
+    return apiURL.get("/getTasks",{withCredentials:true});
 
   };
 
 
   export const handleUpdateTaskStatus = (taskId, statusData) => {
-    return axios.put(apiURL+"/updateTaskStatus/"+taskId, statusData,{withCredentials:true});
+    return apiURL.put("/updateTaskStatus/"+taskId, statusData,{withCredentials:true});
   };
 
   export const handleUpdateTaskMark = (taskId, marks) => {
-    return axios.put(apiURL+"/updateTaskMarks/"+taskId, marks,{withCredentials:true});
+    return apiURL.put("/updateTaskMarks/"+taskId, marks,{withCredentials:true});
   };
 
   export const handleUpdateSubmitTaskURL = (taskId, url) => {
-    return axios.put(apiURL+"/updateSubmitTaskUrl/"+taskId, url,{withCredentials:true});
+    return apiURL.put("/updateSubmitTaskUrl/"+taskId, url,{withCredentials:true});
   };
 
   export const handleUpdateComments = (taskId, field) => {
-    return axios.put(apiURL+"/updatecomments/"+taskId, field,{withCredentials:true});
+    return apiURL.put("/updatecomments/"+taskId, field,{withCredentials:true});
   };
 
  
