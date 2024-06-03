@@ -9,7 +9,7 @@ export const register = createAsyncThunk(
     async (user, thunkAPI) => {
       try {
         const response= await handleRegistrationApi(user);
-        console.log(response,"redux")
+      
         if (response.data){
             localStorage.setItem('user', JSON.stringify(response.data));
             return response.data;
@@ -32,7 +32,7 @@ export const register = createAsyncThunk(
     async (user, thunkAPI) => {
       try {
         const response= await handleLoginApi(user);
-        console.log(response,"redux")
+    
         if (response.data){
             localStorage.setItem('user', JSON.stringify(response.data));
             return response.data;

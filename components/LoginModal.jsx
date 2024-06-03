@@ -122,7 +122,6 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
   if (isLoading) {
     <Spinner />;
   }
-  console.log(FormValue);
 
   // const handleUserLogin = (message) => {
   //   if (
