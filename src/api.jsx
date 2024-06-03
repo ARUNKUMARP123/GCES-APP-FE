@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const localApi = "http://localhost:4001";
-const RenderApi="https://gces-app-fe1.netlify.app"
-const API_URL  =import.meta.env.VITE_API_URL==="Production" ? RenderApi : localApi;
+const renderApi="https://gces-app-fe1.netlify.app"
+const API_URL  =import.meta.env.VITE_API_URL==="Production" ? renderApi : localApi;
 
 const apiURL = axios.create({
   baseURL: API_URL,
