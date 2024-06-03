@@ -2,9 +2,11 @@ import axios from "axios";
 
 const localApi = "http://localhost:4001";
 
-const proApi="https://gces-app-node.onrender.com";
+const API_URL  =import.meta.env.VITE_API_URL || localApi;
 
-const apiURL=import.meta.env.REACT_APP_ENV==='production'? proApi:localApi;
+const apiURL = axios.create({
+  baseURL: API_URL,
+});
 
 // const apiURL = localApi;
   
