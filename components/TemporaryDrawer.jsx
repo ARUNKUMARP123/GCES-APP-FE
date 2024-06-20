@@ -12,12 +12,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import WorkIcon from '@mui/icons-material/Work';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function TemporaryDrawer({
   TemporaryDrawerOpen,
   toggleDrawer = () => {},
 }) {
 
+
+  const { user } = useSelector((state) => state.Auth);
   const navigate=useNavigate();
 
   const DrawerList = (
@@ -37,7 +40,8 @@ export default function TemporaryDrawer({
             </ListItemButton>
           </ListItem>
       </List>
-      <List >
+      {user?.user_role==="Admin" && (
+        <List >
           <ListItem  disablePadding >
             <ListItemButton onClick={()=>{navigate("/users")}} > 
               <ListItemIcon>
@@ -47,6 +51,8 @@ export default function TemporaryDrawer({
             </ListItemButton>
           </ListItem>
       </List>
+      )}
+      
       <List>
           <ListItem  disablePadding>
             <ListItemButton onClick={()=>{navigate("/task")}}>
