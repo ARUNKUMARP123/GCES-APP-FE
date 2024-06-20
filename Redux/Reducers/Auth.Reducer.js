@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { handleLoginApi, handleRegistrationApi } from "../../src/api";
 
+
 let User =JSON.parse(localStorage.getItem("user"));
 
 
@@ -85,9 +86,11 @@ export const AuthSlice=createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.user = action.payload;
+                
      
               })
               .addCase(register.rejected, (state, action) => {
+                state.isError=true;
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.user = null;
@@ -100,13 +103,17 @@ export const AuthSlice=createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.user = action.payload;
+               
      
               })
               .addCase(login.rejected, (state, action) => {
+                state.isError=true;
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.user = null;
                 state.message = action.payload;
+                
+                
               })
               
         

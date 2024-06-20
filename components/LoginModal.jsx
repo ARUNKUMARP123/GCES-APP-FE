@@ -103,21 +103,25 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
     branch,
   } = FormValue;
 
-  const { user, isError, isLoading, isSuccess, message, } = useSelector(
+  const { user, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.Auth
   );
-
+  
   useEffect(() => {
+
     if (isError) {
       toast.error(message);
+     
+  
     }
 
     if (isSuccess && user) {
+      toast.success(user.message);
       navigate("/");
     }
 
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [user, isError, isSuccess, navigate, dispatch, message]);
 
   if (isLoading) {
     <Spinner />;
@@ -145,8 +149,6 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
             event.preventDefault();
             if (Type === "login") {
               const userData = {
-                rollnumber,
-                username,
                 email,
                 password1,
               };
@@ -183,6 +185,7 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
       >
         <DialogTitle>{Type === "login" ? "LogIn" : "Registration"}</DialogTitle>
         <DialogContent>
+        {Type !== "login" && (<>
           <TextField
             autoFocus
             required
@@ -214,6 +217,9 @@ export default function LoginModal({ ModalOpen, setModalOpen, Type }) {
               }));
             }}
           />
+        
+        </>)}
+         
           <TextField
             autoFocus
             required

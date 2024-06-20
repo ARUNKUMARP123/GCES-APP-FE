@@ -13,14 +13,10 @@ const apiURL = axios.create({
 // const apiURL = localApi;
   
 export const handleLoginApi = ({
-  rollnumber = "",
-  username = "",
   email = "",
   password1 = "",
 }) => {
   return apiURL.post("/login", {
-    rollnumber,
-    username,
     email,
     password1,
   },{withCredentials:true});
