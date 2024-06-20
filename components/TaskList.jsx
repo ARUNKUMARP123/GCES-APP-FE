@@ -103,7 +103,7 @@ const TaskList = () => {
     };
 
   return (
-    <Box>
+    <Box >
     <Typography variant="h4" gutterBottom>
       Task List
     </Typography>
@@ -120,9 +120,9 @@ const TaskList = () => {
           <MenuItem value="Completed">Completed</MenuItem>
         </Select>
       </FormControl>
-    <Grid container spacing={2} sx={{ marginTop: 2 }}>
+    <Grid container spacing={2} sx={{ marginTop: 2 }} >
       {filteredTasks.map((task) => (
-        <Grid item xs={12} md={6} key={task._id}>
+        <Grid  item xs={12} md={6} key={task._id}>
           <TaskCard
             task={task}
             isAdmin={userRole}

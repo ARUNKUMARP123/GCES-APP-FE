@@ -13,7 +13,7 @@ const TaskCard = ({ task, isAdmin, handleEdit, handleDelete, handleStatusChange,
   const [marks, setMarks] = useState(task.marks || '');
 
   return (
-    <Card sx={{ marginBottom: 2 }}>
+    <Card sx={{ marginBottom: 2,height:"100%" }}>
       <CardContent>
         <Typography variant="h5" >{task.title}</Typography>
         <Typography color="textSecondary">Description:{task.description}</Typography>
@@ -21,7 +21,7 @@ const TaskCard = ({ task, isAdmin, handleEdit, handleDelete, handleStatusChange,
         <Typography color="textSecondary">Assigned To: {task.assignedTo}</Typography>
         <Box>
 
-          <Typography color="textSecondary">Task URL: <a href={task.taskUrl} target="_blank" rel="noopener noreferrer" >{task.taskUrl} </a></Typography>
+          <Typography color="textSecondary">Task URL: <a href={task.taskUrl}  target="_blank" rel="noopener noreferrer" >{task.taskUrl} </a></Typography>
           <Typography color="textSecondary">Submission URL:<a href={task.submissionUrl} target="_blank" rel="noopener noreferrer">{task.submissionUrl || 'Not submitted yet'}</a> </Typography>
           {isAdmin!=="Admin" && (
             <Box>
